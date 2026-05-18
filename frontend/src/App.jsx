@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Loader, Trash2 } from 'lucide-react';
 
-const API_URL = 'http://localhost:5000/api/chat';
+const API_URL = "https://pdf-document-q-a.onrender.com";
 
 const SUGGESTIONS = [
   { icon: '📋', text: 'What are the main topics covered?' },
@@ -245,7 +245,7 @@ export default function App() {
     setLoading(true);
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question }),
