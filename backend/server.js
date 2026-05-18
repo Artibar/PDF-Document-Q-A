@@ -3,9 +3,14 @@ import cors from 'cors';
 import {chatting} from './query.js'
 import {indexDocument} from "./index.js"
 import { Pinecone } from '@pinecone-database/pinecone'
+import { config } from 'dotenv';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ["https://pdf-document-q-a.onrender.com/"],
+    methods: ["GET", "POST"],
+    credentials: true
+}));
 app.use(express.json());
 const port = process.env.PORT || 5000;
 
@@ -30,7 +35,7 @@ app.post('/api/chat', async(req, res) => {
     }
 });
 
-const server = app.listen(port, ()=>{
+const server = app.listen(port, '0.0.0.0', ()=>{
     console.log(`Server running on PORT : ${port}`)
 });
 
