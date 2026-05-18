@@ -7,7 +7,7 @@ import { config } from 'dotenv';
 
 const app = express();
 app.use(cors({
-    origin: ["https://pdf-document-q-a.onrender.com/"],
+    origin: ["https://pdf-document-q-a.onrender.com", "https://pdf-document-q-a-1.onrender.com"],
     methods: ["GET", "POST"],
     credentials: true
 }));
