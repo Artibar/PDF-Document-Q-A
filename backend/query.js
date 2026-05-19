@@ -15,12 +15,13 @@ const model = new ChatGoogleGenerativeAI({
 })
 
 const transformQuery = async (question) => {
-    return await model.generateContent([
+    const result = await model.invoke([
         {
             role: 'user',
             content: `Rephrase this into a standalone question. Only output the rewritten question. Question: ${question}`
         }
     ])
+    return result.content
 }
 
 export const chatting = async (question) => {
@@ -68,7 +69,7 @@ Give a clear, detailed answer based on the context. If the exact answer is not i
         }
     ]
 
-    const answer = await model.generateContent(messages)
+    const answer = await model.invoke(messages)
     History.push({ role: 'user', content: queries })
     History.push({ role: 'assistant', content: answer })
     return answer
