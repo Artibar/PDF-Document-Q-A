@@ -2,66 +2,20 @@ import dotenv from 'dotenv';
 dotenv.config()
 import { HuggingFaceInferenceEmbeddings } from '@langchain/community/embeddings/hf'
 import { Pinecone } from '@pinecone-database/pinecone';
+import { ChatGoogleGenerativeAI } from '@google/gen-ai';
 
 const History = []
 
-const FREE_MODELS = [
-    // Best all-rounder (huge context, reasoning built-in)
-  'qwen/qwen3-235b-a22b:free',
 
-  // Best for coding specifically
-  'qwen/qwen3-coder-480b-a35b:free',
 
-  // Strong reasoning model
-  'deepseek/deepseek-r1:free',          
-
-  // Meta's latest (1M context window)
-  'meta-llama/llama-4-maverick:free',
-
-  // Fallback — OpenRouter picks automatically
-  'openrouter/free',
-]
-
-const openRouterChat = async (messages, modelIndex = 0) => {
-    if (modelIndex >= FREE_MODELS.length) {
-        throw new Error('All free models are rate limited. Try again in a minute.')
-    }
-
-    const model = FREE_MODELS[modelIndex]
-    console.log(`Trying model: ${model}`)
-
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ model, messages })
-    })
-
-    const data = await response.json()
-
-    if (data.error?.code === 429 || response.status === 429) {
-        console.log(`Model ${model} rate limited, trying next...`)
-        return openRouterChat(messages, modelIndex + 1)
-    }
-
-    if (data.error || !data.choices?.[0]) {
-        console.log(`Model ${model} failed, trying next...`)
-        return openRouterChat(messages, modelIndex + 1)
-    }
-
-    const content = data.choices[0].message.content
-    if (!content) {
-        console.log(`Model ${model} returned null content, trying next...`)
-        return openRouterChat(messages, modelIndex + 1)
-    }
-
-    return content
-}
+const model = new ChatGoogleGenerativeAI({
+    model: 'gemini-1.5-pro',
+    configuration: { baseURL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent' },
+    apiKey: process.env.GOOGLE_API_KEY,
+})
 
 const transformQuery = async (question) => {
-    return await openRouterChat([
+    return await model.generateContent([
         {
             role: 'user',
             content: `Rephrase this into a standalone question. Only output the rewritten question. Question: ${question}`
@@ -114,7 +68,7 @@ Give a clear, detailed answer based on the context. If the exact answer is not i
         }
     ]
 
-    const answer = await openRouterChat(messages)
+    const answer = await model.generateContent(messages)
     History.push({ role: 'user', content: queries })
     History.push({ role: 'assistant', content: answer })
     return answer
