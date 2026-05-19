@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 import { HuggingFaceInferenceEmbeddings } from '@langchain/community/embeddings/hf'
 import { Pinecone } from '@pinecone-database/pinecone';
-import { ChatGoogleGenerativeAI } from '@langchain/google/gen-ai';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 
 const History = []
 
