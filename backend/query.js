@@ -6,10 +6,20 @@ import { Pinecone } from '@pinecone-database/pinecone';
 const History = []
 
 const FREE_MODELS = [
-    'openrouter/free',
-    'meta-llama/llama-3.2-3b-instruct:free',
-    'qwen/qwen-2.5-7b-instruct:free',
-    'deepseek/deepseek-r1:free',
+    // Best all-rounder (huge context, reasoning built-in)
+  'qwen/qwen3-235b-a22b:free',
+
+  // Best for coding specifically
+  'qwen/qwen3-coder-480b-a35b:free',
+
+  // Strong reasoning model
+  'deepseek/deepseek-r1:free',          
+
+  // Meta's latest (1M context window)
+  'meta-llama/llama-4-maverick:free',
+
+  // Fallback — OpenRouter picks automatically
+  'openrouter/free',
 ]
 
 const openRouterChat = async (messages, modelIndex = 0) => {
