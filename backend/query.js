@@ -2,15 +2,15 @@ import dotenv from 'dotenv';
 dotenv.config()
 import { HuggingFaceInferenceEmbeddings } from '@langchain/community/embeddings/hf'
 import { Pinecone } from '@pinecone-database/pinecone';
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { ChatGroq } from '@langchain/groq';
 
 const History = []
 
 
 
-const model = new ChatGoogleGenerativeAI({
-    model: 'gemini-2.0-flash',
-    apiKey: process.env.GOOGLE_API_KEY,
+const model = new ChatGroq({                  
+    model: 'llama-3.3-70b-versatile',        
+    apiKey: process.env.GROQ_API_KEY,      
 })
 
 const transformQuery = async (question) => {
