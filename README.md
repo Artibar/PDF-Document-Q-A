@@ -1,4 +1,4 @@
-<img width="1920" height="1200" alt="Screenshot 2026-05-20 111121" src="https://github.com/user-attachments/assets/638480d3-0eff-402a-8e1f-a4b062279716" />
+
 <div align="center">
 
 <img src="https://img.shields.io/badge/RAG%20Powered-LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white" />
@@ -34,6 +34,9 @@ At build time, the document corpus is chunked, embedded using HuggingFace models
 
 ## ✨ Features
 LiveLink : [ DSA ChatBot AI](https://pdf-document-q-a-1.onrender.com/)
+
+<img width="1916" height="1005" alt="Screenshot 2026-05-20 134437" src="https://github.com/user-attachments/assets/3f7b359f-0377-4c20-bc72-ccb2905b0afc" />
+
 
 ### 🔍 Retrieval-Augmented Generation (RAG)
 - PDF loaded with **LangChain PDFLoader** and split into overlapping chunks using **RecursiveCharacterTextSplitter**
