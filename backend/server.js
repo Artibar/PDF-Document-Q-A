@@ -25,12 +25,12 @@ app.get('/api/check-index', async (req, res) => {
 app.post('/api/chat', async(req, res) => {
     try {
         const { question } = req.body;
-        console.log('Question received:', question) // ← add
+        console.log('Question received:', question) 
         const answer = await chatting(question);
-        console.log('Answer:', answer)              // ← add
+        console.log('Answer:', answer)              
         res.json({ answer });
     } catch (error) {
-        console.error('CHAT ERROR:', error)         // ← add full error object
+        console.error('CHAT ERROR:', error)        
         res.status(500).json({ error: error.message });
     }
 });

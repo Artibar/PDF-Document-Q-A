@@ -8,9 +8,9 @@ const History = []
 
 
 
-const model = new ChatGroq({                  
-    model: 'llama-3.3-70b-versatile',        
-    apiKey: process.env.GROQ_API_KEY,      
+const model = new ChatGroq({
+    model: 'llama-3.3-70b-versatile',
+    apiKey: process.env.GROQ_API_KEY,
 })
 
 const transformQuery = async (question) => {
@@ -69,7 +69,9 @@ Give a clear, detailed answer based on the context. If the exact answer is not i
     ]
 
     const answer = await model.invoke(messages)
+    const answerText = answer.content // ← extract string
+
     History.push({ role: 'user', content: queries })
-    History.push({ role: 'assistant', content: answer })
-    return answer
+    History.push({ role: 'assistant', content: answerText }) // ← string
+    return answerText
 }
